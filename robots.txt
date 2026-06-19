@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://huattinclery.github.io/app-zh-hth-com-cn/sitemap.xml
