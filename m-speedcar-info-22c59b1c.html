@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>极速赛车 · 信息参考与知识入口</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f8fafc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 1.5rem 1rem 3rem;
+        }
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* 页眉区 */
+        .page-header {
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid #ccf0e6;
+            padding-bottom: 1.25rem;
+        }
+        .page-header h1 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .page-header h1 span {
+            background: #0d9488;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.15rem 0.7rem;
+            border-radius: 40px;
+            margin-left: 0.5rem;
+        }
+        .page-header .sub {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+        .page-header .sub mark {
+            background: #e2f5f0;
+            color: #0f766e;
+            padding: 0 0.4rem;
+            border-radius: 6px;
+        }
+
+        /* 网格卡片通用 */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem 1.2rem 1.8rem;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.04), 0 1px 3px rgba(0,0,0,0.03);
+            border: 1px solid #e6f0ed;
+            transition: transform 0.1s ease, box-shadow 0.2s;
+        }
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(13, 148, 136, 0.10);
+            border-color: #b8dfd6;
+        }
+        .card-icon {
+            font-size: 1.6rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #0d3b3a;
+        }
+        .card p {
+            color: #334155;
+            font-size: 0.92rem;
+            margin-bottom: 0.3rem;
+        }
+        .card a {
+            color: #0d9488;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px dotted #b0ddd4;
+        }
+        .card a:hover {
+            border-bottom: 1px solid #0d9488;
+        }
+
+        /* 特殊说明区 */
+        .note-block {
+            background: #f1f9f7;
+            border-left: 5px solid #14b8a6;
+            padding: 1.4rem 1.5rem;
+            border-radius: 16px;
+            margin: 2rem 0 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        .note-block .note-label {
+            font-weight: 600;
+            color: #0f766e;
+            background: #d2efe9;
+            padding: 0.1rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        .note-block p {
+            flex: 1;
+            min-width: 200px;
+            color: #1e293b;
+        }
+        .note-block a {
+            color: #0d9488;
+            font-weight: 500;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* 简介区 / hero 精简 */
+        .intro-zone {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem 1.8rem;
+            margin: 2rem 0 1.5rem;
+            border: 1px solid #d9ece6;
+            box-shadow: 0 2px 6px rgba(13,148,136,0.02);
+        }
+        .intro-zone h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #134e4a;
+            margin-bottom: 0.8rem;
+        }
+        .intro-zone p {
+            max-width: 680px;
+        }
+        .highlight-list {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            margin-top: 1rem;
+            gap: 0.8rem 2rem;
+        }
+        .highlight-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: #1f3a37;
+        }
+        .highlight-list li::before {
+            content: "▹";
+            color: #0d9488;
+            font-weight: bold;
+        }
+
+        /* 提示区 */
+        .tips-box {
+            background: #f3fbf9;
+            border-radius: 24px;
+            padding: 1.8rem 1.8rem 2rem;
+            margin: 1.8rem 0;
+            border: 1px solid #c5e3da;
+        }
+        .tips-box h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f766e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .tips-item {
+            background: white;
+            padding: 0.9rem 1rem;
+            border-radius: 40px 12px 12px 40px;
+            border-left: 4px solid #14b8a6;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            font-size: 0.9rem;
+            color: #1e293b;
+        }
+        .tips-item strong {
+            color: #0d3b3a;
+        }
+
+        /* FAQ 摘要卡片 */
+        .faq-preview {
+            margin-top: 2.5rem;
+        }
+        .faq-preview h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #134e4a;
+            margin-bottom: 1rem;
+        }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+        .faq-item {
+            background: white;
+            border-radius: 18px;
+            padding: 1.2rem 1.3rem;
+            border: 1px solid #e1efe9;
+        }
+        .faq-item .q {
+            font-weight: 600;
+            color: #1e3a3a;
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.2rem;
+        }
+        .faq-item .q::before {
+            content: "Q";
+            background: #0d9488;
+            color: white;
+            font-weight: 700;
+            font-size: 0.7rem;
+            width: 1.2rem;
+            height: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+        }
+        .faq-item .a {
+            font-size: 0.88rem;
+            color: #475569;
+            margin-top: 0.2rem;
+            padding-left: 1.6rem;
+        }
+        .faq-item a {
+            color: #0d9488;
+            text-decoration: underline dotted 1px;
+        }
+
+        /* 相关信息区 */
+        .related-links {
+            margin-top: 2.8rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid #cbdcd6;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.8rem 1.5rem;
+        }
+        .related-links span {
+            font-weight: 500;
+            color: #1e3a3a;
+        }
+        .related-links a {
+            color: #1e293b;
+            background: #eaf5f1;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: 0.1s;
+        }
+        .related-links a:hover {
+            background: #d5eee6;
+            border-color: #a3cfc3;
+        }
+
+        /* 底部 */
+        .footer-note {
+            margin-top: 3rem;
+            font-size: 0.8rem;
+            color: #64748b;
+            text-align: center;
+            border-top: 1px solid #d2e3dd;
+            padding-top: 1.5rem;
+        }
+
+        /* 移动微调 */
+        @media (max-width: 600px) {
+            body { padding: 1rem 0.8rem 2rem; }
+            .page-header h1 { font-size: 1.5rem; }
+            .intro-zone { padding: 1.5rem 1rem; }
+            .card { padding: 1.2rem 1rem; }
+            .note-block { flex-direction: column; gap: 0.3rem; }
+        }
+        @media (min-width: 760px) {
+            .grid-cards { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- 页眉 -->
+    <header class="page-header">
+        <h1>
+            ⚡ 极速赛车 <span>知识库</span>
+        </h1>
+        <div class="sub">
+            <mark>日常查询</mark> · 对照参考 · 延伸阅读
+            <span style="color:#94a3b8;margin-left:auto;font-size:0.8rem;">基于公开信息整理</span>
+        </div>
+    </header>
+
+    <!-- 简介 / 切入点 -->
+    <div class="intro-zone">
+        <h2>📋 从查询到理解</h2>
+        <p>不管你是刚开始接触 <a href="https://m-speedcar.com" style="color:#0d9488;font-weight:500;text-decoration:underline dotted;">极速赛车</a>，还是想系统梳理参数、版本、规格，这里提供结构化的信息索引。比起零散搜索，把常见问题、对照数据和提示放在一处，日常查阅更顺手。</p>
+        <ul class="highlight-list">
+            <li>车型参数 · 动力对比</li>
+            <li>版本沿革 · 配置差异</li>
+            <li>技术关键词速查</li>
+            <li>常见误区提醒</li>
+        </ul>
+    </div>
+
+    <!-- 网格卡片：四个知识模块 -->
+    <div class="grid-cards">
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>规格对照</h3>
+            <p>不同年份、动力系统的参数并列展示，排量、功率、扭矩、传动形式一目了然。适合选车或对比时快速翻阅。</p>
+            <p style="margin-top:0.4rem;">→ 相关数据整理自官方手册与实测报告。</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🔍</div>
+            <h3>术语说明</h3>
+            <p>从“序列式变速箱”到“限滑差速器”，每个技术点配有简短说明。适合边读边对照，降低理解门槛。</p>
+            <p style="margin-top:0.4rem;">想了解更多？返回 <a href="https://m-speedcar.com">极速赛车</a> 主站浏览细节。</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🧩</div>
+            <h3>版本简史</h3>
+            <p>代际更迭、中期改款、特别版 —— 用时间线的方式梳理演化脉络。帮你快速定位自己关心的版本区间。</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">⚠️</div>
+            <h3>注意与澄清</h3>
+            <p>一些容易被误解的数据（如极速实测 vs 电子限速）、不同市场规格差异等。内容力求准确，但仍建议以官网为准。</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🌐</div>
+            <h3>延伸阅读</h3>
+            <p>关联技术文章、赛事规则简析、同类型车横向参考。保持开放视角，不只停留在数字表面。</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">📌</div>
+            <h3>常见场景</h3>
+            <p>日常查询：比如寻找某年款马力数据、对比两代车重差异。按入口分类，减少重复翻找。</p>
+        </div>
+    </div>
+
+    <!-- 提示区 -->
+    <div class="tips-box">
+        <h3>💡 查阅提示</h3>
+        <div class="tips-grid">
+            <div class="tips-item"><strong>优先</strong> 以官方公布数据为基准，第三方测试供参考。</div>
+            <div class="tips-item"><strong>注意</strong> 不同市场（北美/欧洲/亚洲）规格可能存在微调。</div>
+            <div class="tips-item"><strong>年份</strong> 换代年份前后配置可能有差异，核对铭牌更可靠。</div>
+            <div class="tips-item"><strong>单位</strong> 功率可能以 hp / kW / PS 分别标注，换算时留意。</div>
+        </div>
+    </div>
+
+    <!-- 说明区块：带边框的特别提示 -->
+    <div class="note-block">
+        <span class="note-label">📎 信息说明</span>
+        <p>本页作为知识索引，内容汇总自公开资料和官方发布。如果发现需要修正的地方，欢迎参考 <a href="https://m-speedcar.com">极速赛车</a> 网站的最新信息进行核对。</p>
+    </div>
+
+    <!-- FAQ 摘要卡片 -->
+    <div class="faq-preview">
+        <h2>❓ 常见问题摘要</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <div class="q">入门款与高功率版的主要区别？</div>
+                <div class="a">发动机调校、涡轮压力、冷却系统和部分底盘部件不同。详细对比表可在主站查阅。</div>
+            </div>
+            <div class="faq-item">
+                <div class="q">哪里能查特定年份的详细配置？</div>
+                <div class="a">车型年份与VIN码结合最准确，也可访问 <a href="https://m-speedcar.com">极速赛车</a> 的车型档案页面。</div>
+            </div>
+            <div class="faq-item">
+                <div class="q">极速数据是否包含电子限速？</div>
+                <div class="a">大部分原厂车有电子限速，实测极速通常会略高于官方公布值。具体视轮胎、路面等条件。</div>
+            </div>
+            <div class="faq-item">
+                <div class="q">不同市场的命名规则一样吗？</div>
+                <div class="a">不一定。同一车型在不同地区可能使用不同后缀或套件名称，核对底盘代号更可靠。</div>
+            </div>
+        </div>
+        <p style="margin-top:1rem;font-size:0.9rem;color:#4b6b64;">更多问题可定向搜索或直接参考官网 FAQ 板块。</p>
+    </div>
+
+    <!-- 相关信息区 -->
+    <div class="related-links">
+        <span>📍 相关信息</span>
+        <a href="#">车型年表</a>
+        <a href="#">动力参数</a>
+        <a href="#">技术图解</a>
+        <a href="#">赛事关联</a>
+        <a href="#">改装参考</a>
+        <a href="https://m-speedcar.com">极速赛车</a>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer-note">
+        <p>内容仅供学习与参考 · 建议结合官方资料交叉验证 · 页面布局灵感来自知识库入口</p>
+    </div>
+
+</div>
+</body>
+</html>
